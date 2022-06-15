@@ -1,0 +1,49 @@
+\documentclass[a4paper]{article}
+
+\usepackage{luacode}
+\usepackage{cite}
+\usepackage[nonumberlist]{glossaries}
+\usepackage{hyperref}
+\usepackage[margin=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{mfirstuc}
+\usepackage[official]{eurosym}
+\usepackage{luacode}
+
+\makeglossaries
+
+\graphicspath{{./images/}}
+
+\newglossaryentry{LabView}
+{
+    name={LabView},
+    description={
+        system-design platorm and development environment for associated visual 
+        programming language%
+    }
+}
+
+
+\newglossaryentry{VI}
+{
+    name={VI},
+    description={Virtual Instrument}
+}
+
+\begin{document}
+
+    \tableofcontents
+    \clearpage
+    
+    $body$
+
+    \clearpage
+    \bibliography{bibliography}
+    \bibliographystyle{abbrv}
+    \clearpage
+    \printglossaries
+
+\end{document}
+
+
