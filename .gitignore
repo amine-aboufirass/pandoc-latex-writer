@@ -1,0 +1,12 @@
+*.out
+*.aux
+*.ist
+*.log
+*.fls
+*.glg
+*.glo
+*.gls
+*.log
+*.swp
+*.toc
+*.fdb_latexmk
