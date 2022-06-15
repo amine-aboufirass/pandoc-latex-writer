@@ -46,8 +46,10 @@ end
 
 function print_table(tbl)
     for k, v in pairs(tbl) do
-        print("key = " .. tostring(k) .. "[" .. type(k) .. "]")
-        print("val = " .. tostring(v) .. "[" .. type(v) .. "]")
+        print(
+            "key = " .. tostring(k) .. "[" .. type(k) .. "], " ..
+            "val = " .. tostring(v) .. "[" .. type(v) .. "]"
+        )
     end
 end
 
@@ -56,8 +58,13 @@ setmetatable(
     {
         __index = function (tbl, fname)
             if fname == "BulletList" then
-                print_table(tbl) 
+                print("\nCALLING BULLETLIST\n")
+                print("before insertion")
+                print_table(bullets)
                 table.insert(bullets, "*")
+                print("\nafter insertion")
+                print_table(bullets)
+                
                 return BulletList_
             end
         end
