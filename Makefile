@@ -13,3 +13,6 @@ pandoc_native:
 
 pandoc_json_clip:
 	pandoc test.md -t json | clip
+
+compare_files:
+	compare-object (get-content test.md) (get-content ref.md)
