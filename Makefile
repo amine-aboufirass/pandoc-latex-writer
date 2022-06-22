@@ -1,6 +1,7 @@
 SHELL=powershell.exe
 
 generate_pdf: pandoc_write latex_compile
+test_pandoc: compile_pandoc_test compare_files
 
 latex_compile:
 	latexmk --lualatex test.tex
@@ -16,3 +17,6 @@ pandoc_json_clip:
 
 compare_files:
 	compare-object (get-content test.md) (get-content ref.md)
+ 
+compile_pandoc_test:
+	pandoc -t new-style-writer-example.lua -o test.md test.json
