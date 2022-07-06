@@ -13,9 +13,21 @@ def action(elem, doc):
         text = r'\item ' + pf.stringify(elem)
         return pf.ListItem(pf.Plain(pf.Str(text)))
 
+    elif isinstance(elem, pf.Header):
+        text = f"\\{'sub'*(elem.level-1)}section{{{pf.stringify(elem)}}}"
+        return pf.Plain(pf.Str(text))
+
 def main(doc=None):
     return pf.run_filter(action, doc = doc)
 
+def debug():
+    with open("test.md") as fs:
+        markdown = fs.read()
+
+    doc = pf.convert_text(markdown, standalone=True)
+    doc.walk(action)
+
 if __name__ == "__main__":
     main()
+    #debug()
 
