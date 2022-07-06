@@ -10,5 +10,6 @@
 *.swp
 *.toc
 *.fdb_latexmk
+out.*
 .vscode/
 .idea/
