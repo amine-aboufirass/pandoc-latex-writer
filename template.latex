@@ -21,6 +21,7 @@
 \definecolor{bg}{rgb}{0.85, 0.85, 0.85}
 \setmintedinline{bgcolor=bg}
 \setminted{bgcolor=bg, linenos}
+\renewcommand{\theFancyVerbLine}{\small\arabic{FancyVerbLine}}
 
 \newglossaryentry{LabView}
 {
