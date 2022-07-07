@@ -20,6 +20,7 @@
 \setmonofont{Courier New}
 \definecolor{bg}{rgb}{0.85, 0.85, 0.85}
 \setmintedinline{bgcolor=bg}
+\setminted{bgcolor=bg, linenos}
 
 \newglossaryentry{LabView}
 {

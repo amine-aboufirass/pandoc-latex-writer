@@ -21,7 +21,21 @@ def action(elem, doc):
         # inline code
         text = f"\\mintinline{{text}}{{{pf.stringify(elem)}}}"
         return pf.Code(text)
-       
+    
+    elif isinstance(elem, pf.CodeBlock):
+        language = elem.classes[0]
+        caption = "test"
+        label = "test"
+        code = pf.stringify(elem).split('\n')
+        code = [code[0]] + [" " * 8 + f"{line}" for line in code[1:]]
+        code = "\n".join(code)
+        text = (f"\\begin{{listing}}[H]\n"
+        f"    \\begin{{minted}}[gobble=12]{{{language}}}\n"
+        f"        {code}\n"
+        f"    \\end{{minted}}\n"
+        f"\\end{{listing}}\n")
+
+        return pf.Plain(pf.Str(text))
 
 def main(doc=None):
     return pf.run_filter(action, doc = doc)
