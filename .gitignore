@@ -13,3 +13,6 @@
 out.*
 .vscode/
 .idea/
+_minted-out/
+_minted-test/
+

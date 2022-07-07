@@ -17,6 +17,12 @@ def action(elem, doc):
         text = f"\\{'sub'*(elem.level-1)}section{{{pf.stringify(elem)}}}"
         return pf.Plain(pf.Str(text))
 
+    elif isinstance(elem, pf.Code):
+        # inline code
+        text = f"\\mintinline{{text}}{{{pf.stringify(elem)}}}"
+        return pf.Code(text)
+       
+
 def main(doc=None):
     return pf.run_filter(action, doc = doc)
 

@@ -1,19 +1,25 @@
 \documentclass[a4paper]{article}
 
-\usepackage{luacode}
+\usepackage{parskip}
+\usepackage{fontspec}
 \usepackage{cite}
 \usepackage[nonumberlist]{glossaries}
 \usepackage{hyperref}
+\usepackage{xcolor}
 \usepackage[margin=2cm]{geometry}
 \usepackage{graphicx}
 \usepackage{array}
 \usepackage{mfirstuc}
 \usepackage[official]{eurosym}
-\usepackage{luacode}
+\usepackage{minted}
 
 \makeglossaries
 
 \graphicspath{{./images/}}
+
+\setmonofont{Courier New}
+\definecolor{bg}{rgb}{0.85, 0.85, 0.85}
+\setmintedinline{bgcolor=bg}
 
 \newglossaryentry{LabView}
 {
