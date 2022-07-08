@@ -39,7 +39,15 @@
     description={Virtual Instrument}
 }
 
+\title{$title$}
+
 \begin{document}
+    \maketitle
+    
+    \begin{abstract}
+    $abstract$
+    \end{abstract}
+    \clearpage
 
     \tableofcontents
     \clearpage

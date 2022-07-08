@@ -1,3 +1,9 @@
+---
+title: A title
+author: Amine Aboufirass
+abstract: some abstract
+---
+
 # A header
 
 ## A subheader
