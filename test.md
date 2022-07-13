@@ -4,9 +4,19 @@ author: Amine Aboufirass
 abstract: some abstract
 ---
 
-# A header
+::::{.glossary}
+function
+: An operation which has an input and output
+
+variable
+: A symbol which can take on any value in a defined domain
+::::
+
+# A header {#identifier .class key=value}
 
 ## A subheader
+
+Mentioning a function and a variable.
 
 This is some text.
 
@@ -43,3 +53,5 @@ class Program
     - subitem
     - subitem
 - item
+
+

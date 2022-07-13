@@ -23,21 +23,6 @@
 \setminted{bgcolor=bg, linenos}
 \renewcommand{\theFancyVerbLine}{\small\arabic{FancyVerbLine}}
 
-\newglossaryentry{LabView}
-{
-    name={LabView},
-    description={
-        system-design platorm and development environment for associated visual 
-        programming language%
-    }
-}
-
-
-\newglossaryentry{VI}
-{
-    name={VI},
-    description={Virtual Instrument}
-}
 
 \title{$title$}
 
