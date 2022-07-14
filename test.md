@@ -63,3 +63,8 @@ An ordered list:
     1. subitem
     1. subitem
 1. item
+
+A figure, referenced by Figure [fig:banana]{ .figure }
+
+![my-caption](banana.jpg){ #fig:banana scale=1.0 }
+

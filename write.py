@@ -66,6 +66,22 @@ def action(elem, doc):
         if "glossary" in elem.classes:
             return pf.Str(f"\\gls{{{pf.stringify(elem)}}}")
 
+        if "figure" in elem.classes:
+            return pf.Str(f"\\ref{{{pf.stringify(elem)}}}")
+
+    elif isinstance(elem, pf.Image):
+        caption = pf.stringify(elem)
+        scale = float(elem.attributes["scale"])
+        text = (
+            f"\\begin{{figure}}[H]\n"
+            f"    \\centering\n"
+            f"    \\caption{{{caption}}}\n"
+            f"    \\label{{{elem.identifier}}}\n"
+            f"    \\includegraphics[scale={scale}]{{{elem.url}}}\n"
+            f"\\end{{figure}}\n"
+            )
+        return pf.Str(text)
+
 def main(doc=None):
     return pf.run_filter(action, doc = doc)
 
