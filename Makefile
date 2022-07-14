@@ -1,5 +1,3 @@
-SHELL=powershell.exe
-
 generate_pdf: pandoc_write latex_compile
 
 latex_compile:

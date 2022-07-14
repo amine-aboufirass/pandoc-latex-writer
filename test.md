@@ -68,3 +68,6 @@ A figure, referenced by Figure [fig:banana]{ .figure }
 
 ![my-caption](banana.jpg){ #fig:banana scale=1.0 }
 
+A table, referenced by Table [tab:mytable]{ .table }
+
+
