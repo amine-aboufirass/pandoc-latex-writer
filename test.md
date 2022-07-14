@@ -48,10 +48,18 @@ class Program
 }
 ```
 
+A bulleted list:
+
 - item
     - subitem
     - subitem
     - subitem
 - item
 
+An ordered list:
 
+1. item
+    1. subitem
+    1. subitem
+    1. subitem
+1. item
