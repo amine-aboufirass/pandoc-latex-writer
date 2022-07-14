@@ -16,7 +16,7 @@ variable
 
 ## A subheader
 
-Mentioning a function and a variable.
+Mentioning a [function]{ .glossary } and a [variable]{ .glossary }.
 
 This is some text.
 

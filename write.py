@@ -1,6 +1,5 @@
 import panflute as pf
 
-GLOSSARY_TERMS = []
 
 def action(elem, doc):
     if isinstance(elem, pf.elements.BulletList):
@@ -45,18 +44,15 @@ def action(elem, doc):
             for definition_item in elem.content[0].content:
                 term = "".join(list(map(pf.stringify, definition_item.term)))
                 definition = pf.stringify(definition_item.definitions[0])
-                GLOSSARY_TERMS.append(term)
                 text += (f"\\newglossaryentry{{{term}}}\n{{\n"
                 f"    name={term},\n"
                 f"    description={{{definition}}}\n}}\n\n")
 
         return pf.Plain(pf.Str(text))
-
-    elif isinstance(elem, pf.Str):
-        if elem.text in GLOSSARY_TERMS:
-            return pf.Str(f"\\gls{{{elem.text}}}")
-        else:
-            return elem
+    
+    elif isinstance(elem, pf.Span):
+        if "glossary" in elem.classes:
+            return pf.Str(f"\\gls{{{pf.stringify(elem)}}}")
 
 def main(doc=None):
     return pf.run_filter(action, doc = doc)
