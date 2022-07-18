@@ -2,6 +2,7 @@
 title: A title
 author: Amine Aboufirass
 abstract: some abstract
+tabcolsep: 0pt
 ---
 
 ::::{.glossary}
@@ -68,6 +69,42 @@ A figure, referenced by Figure [fig:banana]{ .figure }
 
 ![my-caption](banana.jpg){ #fig:banana scale=1.0 }
 
-A table, referenced by Table [tab:mytable]{ .table }
+A simple table, referenced by Table [tab:my-simple-table]{ .table }
+
+:::: {#tab:my-simple-table}
+: Simple table caption
+
+  Right     Left     Center     Default
+-------     ------ ----------   -------
+     12     12        12            12
+    123     123       123          123
+      1     1          1             1
+::::
+
+A grid table, referenced by Table [tab:my-grid-table]{ .table }
+
+::::{#tab:my-grid-table}
+: Grid table caption
+
++---------------+---------------+--------------------+
+| Fruit         | Price         | Advantages         |
++===============+===============+====================+
+| Bananas       |  1.34         | - built-in wrapper |
+|               |               | - bright color     |
++---------------+---------------+--------------------+
+| Oranges       |  2.10         | - cures scurvy     |
+|               |               | - tasty            |
++---------------+---------------+--------------------+
+::::
+
+:::: { #tab:my-simple-table-explicit Right=2cm Left=1cm }
+: Simple table caption, with explicit column widths
+
+  Right     Left     Center     Default
+-------     ------ ----------   -------
+     12     12        12            12
+    123     123       123          123
+      1     1          1             1
+::::
 
 

@@ -51,17 +51,73 @@ def action(elem, doc):
         return pf.Plain(pf.Str(text))
 
     elif isinstance(elem, pf.Div):
-        if "glossary" in elem.classes:
-            text = ""
-            for definition_item in elem.content[0].content:
-                term = "".join(list(map(pf.stringify, definition_item.term)))
-                definition = pf.stringify(definition_item.definitions[0])
-                text += (f"\\newglossaryentry{{{term}}}\n{{\n"
-                f"    name={term},\n"
-                f"    description={{{definition}}}\n}}\n\n")
+        
+        # DEFINITION LISTS
+        if isinstance(elem.content[0], pf.DefinitionList):           
+            if "glossary" in elem.classes:
+                text = ""
+                for definition_item in elem.content[0].content:
+                    term = "".join(list(map(pf.stringify, definition_item.term)))
+                    definition = pf.stringify(definition_item.definitions[0])
+                    text += (f"\\newglossaryentry{{{term}}}\n{{\n"
+                    f"    name={term},\n"
+                    f"    description={{{definition}}}\n}}\n\n")
+            if "abbrv" in elem.classes:
+                pass
+        
+        # TABLES
+        elif isinstance(elem.content[0], pf.Table):
+            table = elem.content[0]
+            head = table.head
+            rows = table.content[0].content
+            colnames = [pf.stringify(item)for item in head.content[0].content]
+                
+            caption = pf.stringify(table.caption)
+            text = (
+                "\\begin{table}[h]\n"
+                f"    \\caption{{{caption}}}\n"
+                f"    \\label{{{elem.identifier}}}\n"
+                "    \\centering\n"
+                "    \\begin{tabular}{"
+            )
+            
+            ## column widths
+            for i, (alignment, colwidth) in enumerate(table.colspec):
+                # ignore alignment for now
+                if colnames[i] in elem.attributes.keys():
+                    text += f"|p{{{elem.attributes[colnames[i]]}}}" 
+                else:
+                    if colwidth=="ColWidthDefault":
+                        text += "|c"
+                    else:
+                        text += f"|p{{\\dimexpr{str(colwidth)}\\textwidth-2\\tabcolsep}}"
+                          
+            text += "|}\n        \\hline\n        "
+            
+            ## header content
+            text += " &\n        ".join(colnames)
+            text += (
+                " \\\\\n"
+                "        \\hline\\hline\n"
+            )
 
+            for row in rows:
+                cells = [pf.stringify(item) for item in row.content]
+                text += "        " 
+                text += " &\n        ".join(cells)
+                text += (
+                    " \\\\\n"
+                    "        \\hline\n"
+                )
+
+            text += "    \\end{tabular}\n\\end{table}"
+                
+        else:
+            pass
+        
         return pf.Plain(pf.Str(text))
-    
+        
+       
     elif isinstance(elem, pf.Span):
         if "glossary" in elem.classes:
             return pf.Str(f"\\gls{{{pf.stringify(elem)}}}")
@@ -81,7 +137,7 @@ def action(elem, doc):
             f"\\end{{figure}}\n"
             )
         return pf.Str(text)
-
+    
 def main(doc=None):
     return pf.run_filter(action, doc = doc)
 
@@ -89,7 +145,7 @@ def debug():
     with open("test.md") as fs:
         markdown = fs.read()
 
-    doc = pf.convert_text(markdown, standalone=True)
+    doc = pf.convert_text(markdown, standalone=True, extra_args=['--columns', '72'])
     doc.walk(action)
 
 if __name__ == "__main__":
