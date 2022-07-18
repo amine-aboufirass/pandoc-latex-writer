@@ -37,16 +37,32 @@ def action(elem, doc):
     
     elif isinstance(elem, pf.CodeBlock):
         language = elem.classes[0]
-        caption = "test"
+        caption = elem.attributes["caption"]
         label = "test"
-        code = pf.stringify(elem).split('\n')
-        code = [code[0]] + [" " * 8 + f"{line}" for line in code[1:]]
-        code = "\n".join(code)
-        text = (f"\\begin{{listing}}[H]\n"
-        f"    \\begin{{minted}}[gobble=12]{{{language}}}\n"
-        f"        {code}\n"
-        f"    \\end{{minted}}\n"
-        f"\\end{{listing}}\n")
+        if "filename" in elem.attributes.keys():
+            filename = elem.attributes['filename']
+            firstline = elem.attributes['firstline']
+            lastline = elem.attributes['lastline']
+
+            text = (f"\\begin{{listing}}[H]\n"
+            f"    \\inputminted\n"
+            f"        [firstline={{{firstline}}}, lastline={{{lastline}}}]\n"
+            f"        {{{language}}}\n"
+            f"        {{{filename}}}\n"
+            f"    \\caption{{{caption}}}\n"
+            f"    \\label{{{elem.identifier}}}\n"
+            f"\\end{{listing}}\n")
+        else:
+            code = pf.stringify(elem).split('\n')
+            code = [code[0]] + [" " * 8 + f"{line}" for line in code[1:]]
+            code = "\n".join(code)
+            text = (f"\\begin{{listing}}[H]\n"
+            f"    \\begin{{minted}}[gobble=12]{{{language}}}\n"
+            f"        {code}\n"
+            f"    \\end{{minted}}\n"
+            f"    \\caption{{{caption}}}\n"
+            f"    \\label{{{elem.identifier}}}\n"
+            f"\\end{{listing}}\n")
 
         return pf.Plain(pf.Str(text))
 
@@ -90,15 +106,16 @@ def action(elem, doc):
                     if colwidth=="ColWidthDefault":
                         text += "|c"
                     else:
-                        text += f"|p{{\\dimexpr{str(colwidth)}\\textwidth-2\\tabcolsep}}"
+                        text += f"|p{{\\dimexpr{str(round(colwidth,2))}\\textwidth-2\\tabcolsep}}"
                           
             text += "|}\n        \\hline\n        "
             
             ## header content
+            colnames = [f"\\bfseries{{{item}}}" for item in colnames]
             text += " &\n        ".join(colnames)
             text += (
                 " \\\\\n"
-                "        \\hline\\hline\n"
+                "        \\hline\n"
             )
 
             for row in rows:
@@ -122,7 +139,7 @@ def action(elem, doc):
         if "glossary" in elem.classes:
             return pf.Str(f"\\gls{{{pf.stringify(elem)}}}")
 
-        if "figure" or "table" in elem.classes:
+        if "figure" or "table" or "listing" in elem.classes:
             return pf.Str(f"\\ref{{{pf.stringify(elem)}}}")
 
     elif isinstance(elem, pf.Image):
@@ -131,9 +148,9 @@ def action(elem, doc):
         text = (
             f"\\begin{{figure}}[H]\n"
             f"    \\centering\n"
+            f"    \\includegraphics[scale={scale}]{{{elem.url}}}\n"
             f"    \\caption{{{caption}}}\n"
             f"    \\label{{{elem.identifier}}}\n"
-            f"    \\includegraphics[scale={scale}]{{{elem.url}}}\n"
             f"\\end{{figure}}\n"
             )
         return pf.Str(text)

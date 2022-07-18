@@ -2,7 +2,6 @@
 title: A title
 author: Amine Aboufirass
 abstract: some abstract
-tabcolsep: 0pt
 ---
 
 ::::{.glossary}
@@ -23,9 +22,9 @@ This is some text.
 
 This is some code `x = 3`.
 
-A block of python code.
+A block of python code, referenced by Listing [lst:python-code-example]{ .listing }
 
-```python
+``` { #lst:python-code-example .python caption="An example of python code" }
 def f(x):
     return x**2
 
@@ -35,9 +34,9 @@ if __name__=="__main__":
     print(y)
 ```
 
-A block of .NET code.
+A block of .NET code, referenced by Listing [lst:dotnet-code-example]{ .listing }
 
-```cs
+``` { #lst:dotnet-code-example .cs caption="An example of dotnet code" }
 using System;
 
 class Program
@@ -47,6 +46,18 @@ class Program
         Console.WriteLine("Hello");
     }
 }
+```
+
+An example of a listing imported from an external file:
+
+``` {
+    #lst:imported-code-block 
+    .python 
+    firstline=4 
+    lastline=8 
+    filename=imported-code-block.py
+    caption="A block of code imported from an external file"
+    }
 ```
 
 A bulleted list:
@@ -67,7 +78,7 @@ An ordered list:
 
 A figure, referenced by Figure [fig:banana]{ .figure }
 
-![my-caption](banana.jpg){ #fig:banana scale=1.0 }
+![A banana](banana.jpg){ #fig:banana scale=1.0 }
 
 A simple table, referenced by Table [tab:my-simple-table]{ .table }
 

@@ -12,6 +12,7 @@
 \usepackage{mfirstuc}
 \usepackage[official]{eurosym}
 \usepackage{minted}
+\usepackage{caption}
 
 \makeglossaries
 
@@ -22,7 +23,9 @@
 \setmintedinline{bgcolor=bg}
 \setminted{bgcolor=bg, linenos}
 \renewcommand{\theFancyVerbLine}{\small\arabic{FancyVerbLine}}
-
+\captionsetup[table]{skip=10pt}
+\captionsetup[figure]{skip=10pt}
+\captionsetup[listing]{skip=10pt}
 
 \title{$title$}
 
