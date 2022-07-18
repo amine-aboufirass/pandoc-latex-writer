@@ -122,7 +122,7 @@ def action(elem, doc):
         if "glossary" in elem.classes:
             return pf.Str(f"\\gls{{{pf.stringify(elem)}}}")
 
-        if "figure" in elem.classes:
+        if "figure" or "table" in elem.classes:
             return pf.Str(f"\\ref{{{pf.stringify(elem)}}}")
 
     elif isinstance(elem, pf.Image):
