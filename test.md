@@ -12,7 +12,11 @@ variable
 : A symbol which can take on any value in a defined domain
 ::::
 
-# A header {#identifier .class key=value}
+# A header { #sec:my-header }
+
+# Another header
+
+Referencing previous section as Section [sec:my-header]{ .section }
 
 ## A subheader
 

@@ -27,7 +27,9 @@ def action(elem, doc):
         return pf.ListItem(pf.Plain(pf.Str(text)))
 
     elif isinstance(elem, pf.Header):
-        text = f"\\{'sub'*(elem.level-1)}section{{{pf.stringify(elem)}}}"
+        text = (f"\\{'sub'*(elem.level-1)}section{{{pf.stringify(elem)}}}\n"
+            f"\\label{{{elem.identifier}}}\n")
+
         return pf.Plain(pf.Str(text))
 
     elif isinstance(elem, pf.Code):
@@ -155,6 +157,9 @@ def action(elem, doc):
         
         if "line" in elem.classes:
             return pf.Str(f"\\ref{{{pf.stringify(elem)}}}")
+        
+        if "section" in elem.classes:
+            return pf.Str(f"\\ref{{{pf.stringify(elem)}}})")
 
     elif isinstance(elem, pf.Image):
         caption = pf.stringify(elem)
