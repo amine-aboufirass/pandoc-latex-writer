@@ -48,7 +48,8 @@ class Program
 }
 ```
 
-An example of a listing imported from an external file:
+An example of a listing imported from an external file. Line [ln:print-statement]{ .line }
+contains a `print` statement:
 
 ``` {
     #lst:imported-code-block 
@@ -58,6 +59,17 @@ An example of a listing imported from an external file:
     filename=imported-code-block.py
     caption="A block of code imported from an external file"
     }
+```
+
+A command line block, without line numbers or highlighting, 
+
+```{
+    #lst:command-line-block
+    .text
+    caption="A command line block"
+    linenos="False"
+}
+PS> get-childitem -recurse .
 ```
 
 A bulleted list:

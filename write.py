@@ -39,14 +39,25 @@ def action(elem, doc):
         language = elem.classes[0]
         caption = elem.attributes["caption"]
         label = "test"
+        
+        if "linenos" in elem.attributes.keys():
+            linenos = elem.attributes['linenos']
+        else:
+            linenos = 'true'
+
         if "filename" in elem.attributes.keys():
             filename = elem.attributes['filename']
             firstline = elem.attributes['firstline']
             lastline = elem.attributes['lastline']
-
+            
             text = (f"\\begin{{listing}}[H]\n"
             f"    \\inputminted\n"
-            f"        [firstline={{{firstline}}}, lastline={{{lastline}}}]\n"
+            f"        [\n"
+            f"            mathescape,\n"
+            f"            firstline={{{firstline}}},\n" 
+            f"            lastline={{{lastline}}},\n" 
+            f"            linenos={{{linenos}}}\n"
+            f"        ]\n"
             f"        {{{language}}}\n"
             f"        {{{filename}}}\n"
             f"    \\caption{{{caption}}}\n"
@@ -57,7 +68,7 @@ def action(elem, doc):
             code = [code[0]] + [" " * 8 + f"{line}" for line in code[1:]]
             code = "\n".join(code)
             text = (f"\\begin{{listing}}[H]\n"
-            f"    \\begin{{minted}}[gobble=12]{{{language}}}\n"
+            f"    \\begin{{minted}}[mathescape, gobble=12, linenos={{{linenos}}}]{{{language}}}\n"
             f"        {code}\n"
             f"    \\end{{minted}}\n"
             f"    \\caption{{{caption}}}\n"
@@ -140,6 +151,9 @@ def action(elem, doc):
             return pf.Str(f"\\gls{{{pf.stringify(elem)}}}")
 
         if "figure" or "table" or "listing" in elem.classes:
+            return pf.Str(f"\\ref{{{pf.stringify(elem)}}}")
+        
+        if "line" in elem.classes:
             return pf.Str(f"\\ref{{{pf.stringify(elem)}}}")
 
     elif isinstance(elem, pf.Image):
