@@ -3,8 +3,8 @@
 \usepackage{parskip}
 \usepackage{fontspec}
 \usepackage{cite}
-\usepackage[nonumberlist]{glossaries}
 \usepackage{hyperref}
+\usepackage[nonumberlist, acronym]{glossaries}
 \usepackage{xcolor}
 \usepackage[margin=2cm]{geometry}
 \usepackage{graphicx}
@@ -13,8 +13,6 @@
 \usepackage[official]{eurosym}
 \usepackage{minted}
 \usepackage{caption}
-
-\makeglossaries
 
 \graphicspath{{./images/}}
 
@@ -26,6 +24,9 @@
 \captionsetup[table]{skip=10pt}
 \captionsetup[figure]{skip=10pt}
 \captionsetup[listing]{skip=10pt}
+\setacronymstyle{long-short}
+
+\makeglossaries
 
 \title{$title$}
 
@@ -45,8 +46,11 @@
     \clearpage
     \bibliography{bibliography}
     \bibliographystyle{abbrv}
+    
     \clearpage
-    \printglossaries
+    \printglossary[type=\acronymtype]
+    \clearpage
+    \printglossary
 
 \end{document}
 

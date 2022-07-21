@@ -86,13 +86,21 @@ def action(elem, doc):
             if "glossary" in elem.classes:
                 text = ""
                 for definition_item in elem.content[0].content:
-                    term = "".join(list(map(pf.stringify, definition_item.term)))
+                    term = pf.stringify(definition_item.term)
                     definition = pf.stringify(definition_item.definitions[0])
                     text += (f"\\newglossaryentry{{{term}}}\n{{\n"
                     f"    name={term},\n"
                     f"    description={{{definition}}}\n}}\n\n")
-            if "abbrv" in elem.classes:
-                pass
+            if "acronyms" in elem.classes:
+                text = ""
+                for definition_item in elem.content[0].content:
+                    term = pf.stringify(definition_item.term)
+                    definition = pf.stringify(definition_item.definitions[0])
+                    text += (f"\\newacronym\n"
+                    f"    {{{term}}}\n"
+                    f"    {{{term}}}\n"
+                    f"    {{{definition}}}\n"
+                    )
         
         # TABLES
         elif isinstance(elem.content[0], pf.Table):
@@ -150,6 +158,9 @@ def action(elem, doc):
        
     elif isinstance(elem, pf.Span):
         if "glossary" in elem.classes:
+            return pf.Str(f"\\gls{{{pf.stringify(elem)}}}")
+
+        if "acronyms" in elem.classes:
             return pf.Str(f"\\gls{{{pf.stringify(elem)}}}")
 
         if "figure" or "table" or "listing" in elem.classes:

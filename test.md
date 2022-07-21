@@ -3,8 +3,16 @@ title: A title
 author: Amine Aboufirass
 abstract: some abstract
 ---
+::::{ .acronyms }
+MD
+: Markdown
 
-::::{.glossary}
+OOP
+: Object Oriented Programming
+::::
+
+
+::::{ .glossary }
 function
 : An operation which has an input and output
 
@@ -21,6 +29,10 @@ Referencing previous section as Section [sec:my-header]{ .section }
 ## A subheader
 
 Mentioning a [function]{ .glossary } and a [variable]{ .glossary }.
+
+Mentioning the acronym [OOP]{ .acronyms }, and the acronym [MD]{ .acronyms }.
+
+Mentioning the acronym [OOP]{ .acronyms } a second time, fully abbreviated.
 
 This is some text.
 
