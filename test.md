@@ -34,7 +34,7 @@ Mentioning the acronym [OOP]{ .acronyms }, and the acronym [MD]{ .acronyms }.
 
 Mentioning the acronym [OOP]{ .acronyms } a second time, fully abbreviated.
 
-This is some text.
+This is some text with *light emphasis*. This is some text with **strong emphasis**.
 
 This is some code `x = 3`.
 

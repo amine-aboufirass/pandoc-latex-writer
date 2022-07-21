@@ -184,7 +184,15 @@ def action(elem, doc):
             f"\\end{{figure}}\n"
             )
         return pf.Str(text)
-    
+
+    elif isinstance(elem, pf.Emph):
+        text = f"\\textit{{{pf.stringify(elem)}}}"
+        return pf.Str(text)
+
+    elif isinstance(elem, pf.Strong):
+        text = f"\\textbf{{{pf.stringify(elem)}}}"
+        return pf.Str(text)
+
 def main(doc=None):
     return pf.run_filter(action, doc = doc)
 
