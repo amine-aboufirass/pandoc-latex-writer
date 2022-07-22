@@ -147,7 +147,7 @@ A grid table, referenced by Table [tab:my-grid-table]{ .table }
       1     1          1             1
 ::::
 
-A `plantUML` class diagram:
+A `plantuml` class diagram, referenced by Figure [fig:plantuml-diagram]{ .figure }:
 
 ``` {#fig:plantuml-diagram .plantuml scale=0.8 caption="A class diagram"}
 @startuml
@@ -180,4 +180,13 @@ Beverage <|-- Decaf
 Beverage <|-- Espresso
 
 @enduml
+```
+
+A `graphviz` graph, referenced by Figure [fig:graphviz-diagram]{ .figure }.
+
+```{#fig:graphviz-diagram .graphviz caption="A simple flowchart" scale=0.6}
+digraph G 
+{
+    Hello->World
+}
 ```

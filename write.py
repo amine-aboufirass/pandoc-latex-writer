@@ -67,18 +67,25 @@ def action(elem, doc):
             f"    \\label{{{elem.identifier}}}\n"
             f"\\end{{listing}}\n")
         
-        elif language=="plantuml":
+        elif language in ["plantuml", "graphviz"]:
             code = pf.stringify(elem).split('\n')
             code = "\n".join(code)
             filename = elem.identifier.split(":")[-1]
+            caption = elem.attributes["caption"]
             
-            with open(f"plantuml-diagrams/{filename}.txt", 'w') as fs:
-                fs.write(code)
-            
-            command = f"plantuml -o ../images plantuml-diagrams/{filename}.txt"
+            with open(f"{language}-diagrams/{filename}.txt", 'w') as fs:
+                    fs.write(code)
+
+            if language == 'plantuml':
+                command = f"plantuml -o ../images {language}-diagrams/{filename}.txt"
+            else:
+                command = f"dot -Tpng -o images/{filename}.png " + \
+                    f"{language}-diagrams/{filename}.txt" 
+
             os.system(command)
             
             return pf.Plain(pf.Image(
+                pf.Str(caption),
                 identifier = elem.identifier,
                 url = f"images/{filename}.png",
                 attributes = {
