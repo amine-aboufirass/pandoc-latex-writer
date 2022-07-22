@@ -3,6 +3,7 @@ title: A title
 author: Amine Aboufirass
 abstract: some abstract
 ---
+
 ::::{ .acronyms }
 MD
 : Markdown
@@ -146,4 +147,37 @@ A grid table, referenced by Table [tab:my-grid-table]{ .table }
       1     1          1             1
 ::::
 
+A `plantUML` class diagram:
 
+``` {#fig:plantuml-diagram .plantuml scale=0.8 caption="A class diagram"}
+@startuml
+
+abstract class Beverage {
+    description
+    getDescription()
+    {abstract} cost()
+}
+
+class HouseBlend {
+    cost()
+}
+
+class DarkRoast {
+    cost()
+}
+
+class Decaf {
+    cost()
+}
+
+class Espresso {
+    cost()
+}
+
+Beverage <|-- HouseBlend
+Beverage <|-- DarkRoast
+Beverage <|-- Decaf
+Beverage <|-- Espresso
+
+@enduml
+```

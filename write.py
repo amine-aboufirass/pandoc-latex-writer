@@ -1,5 +1,6 @@
 import panflute as pf
-
+import os
+from pathlib import Path
 
 def action(elem, doc):
     if isinstance(elem, pf.elements.BulletList):
@@ -35,7 +36,7 @@ def action(elem, doc):
     elif isinstance(elem, pf.Code):
         # inline code
         text = f"\\mintinline{{text}}{{{pf.stringify(elem)}}}"
-        return pf.Code(text)
+        return pf.Str(text)
     
     elif isinstance(elem, pf.CodeBlock):
         language = elem.classes[0]
@@ -65,6 +66,26 @@ def action(elem, doc):
             f"    \\caption{{{caption}}}\n"
             f"    \\label{{{elem.identifier}}}\n"
             f"\\end{{listing}}\n")
+        
+        elif language=="plantuml":
+            code = pf.stringify(elem).split('\n')
+            code = "\n".join(code)
+            filename = elem.identifier.split(":")[-1]
+            
+            with open(f"plantuml-diagrams/{filename}.txt", 'w') as fs:
+                fs.write(code)
+            
+            command = f"plantuml -o ../images plantuml-diagrams/{filename}.txt"
+            os.system(command)
+            
+            return pf.Plain(pf.Image(
+                identifier = elem.identifier,
+                url = f"images/{filename}.png",
+                attributes = {
+                    "scale": elem.attributes["scale"]   
+                    }
+                ))
+
         else:
             code = pf.stringify(elem).split('\n')
             code = [code[0]] + [" " * 8 + f"{line}" for line in code[1:]]
