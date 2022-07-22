@@ -2,6 +2,7 @@
 title: A title
 author: Amine Aboufirass
 abstract: some abstract
+fontsize: 11pt
 ---
 
 ::::{ .acronyms }
