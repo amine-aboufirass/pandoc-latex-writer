@@ -52,14 +52,17 @@ def action(elem, doc):
             filename = elem.attributes['filename']
             firstline = elem.attributes['firstline']
             lastline = elem.attributes['lastline']
-            
+            gobble = elem.attributes['gobble']
+
             text = (f"\\begin{{listing}}[H]\n"
             f"    \\inputminted\n"
             f"        [\n"
+            f"            breaklines,\n"
             f"            mathescape,\n"
             f"            firstline={{{firstline}}},\n" 
             f"            lastline={{{lastline}}},\n" 
-            f"            linenos={{{linenos}}}\n"
+            f"            linenos={{{linenos}}},\n"
+            f"            gobble={gobble},\n"
             f"        ]\n"
             f"        {{{language}}}\n"
             f"        {{{filename}}}\n"
@@ -94,11 +97,12 @@ def action(elem, doc):
                 ))
 
         else:
+            gobble = elem.attributes["gobble"]
             code = pf.stringify(elem).split('\n')
             code = [code[0]] + [" " * 8 + f"{line}" for line in code[1:]]
             code = "\n".join(code)
             text = (f"\\begin{{listing}}[H]\n"
-            f"    \\begin{{minted}}[mathescape, gobble=12, linenos={{{linenos}}}]{{{language}}}\n"
+            f"    \\begin{{minted}}[breaklines, mathescape, gobble={gobble}, linenos={{{linenos}}}]{{{language}}}\n"
             f"        {code}\n"
             f"    \\end{{minted}}\n"
             f"    \\caption{{{caption}}}\n"
