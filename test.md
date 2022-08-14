@@ -76,7 +76,7 @@ contains a `print` statement:
     lastline=8 
     filename=imported-code-block.py
     caption="A block of code imported from an external file"
-    gobble=12
+    gobble=0
     }
 ```
 
