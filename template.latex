@@ -1,5 +1,6 @@
 \documentclass[a4paper, $fontsize$]{article}
 
+\usepackage{fdsymbol}
 \usepackage{parskip}
 \usepackage{fontspec}
 \usepackage{cite}
@@ -13,6 +14,9 @@
 \usepackage[official]{eurosym}
 \usepackage{minted}
 \usepackage{caption}
+\usepackage{enumitem}
+
+\let\mathdollar\relax
 
 \graphicspath{{./images/}}
 
@@ -25,6 +29,20 @@
 \captionsetup[figure]{skip=10pt}
 \captionsetup[listing]{skip=10pt}
 \setacronymstyle{long-short}
+
+\newlist{deepitemize}{itemize}{9}
+
+\setlist[deepitemize, 1]{label=\labelitemi, itemindent=0.25em}
+\setlist[deepitemize, 2]{label=\labelitemii, itemindent=0.25em}
+\setlist[deepitemize, 3]{label=\labelitemiii, itemindent=0.25em}
+\setlist[deepitemize, 4]{label=\diamond, itemindent=0.25em}
+\setlist[deepitemize, 5]{label=\smallblacksquare, itemindent=0.75em}
+\setlist[deepitemize, 6]{label=\smalltriangleup, itemindent=1.25em}
+\setlist[deepitemize, 7]{label=\smallcircle, itemindent=1.75em}
+\setlist[deepitemize, 8]{label=\smallsquare, itemindent=2.25em}
+\setlist[deepitemize, 9]{label=\labelitemiv, itemindent=3em}
+
+\setlistdepth{9}
 
 \makeglossaries
 
