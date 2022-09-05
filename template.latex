@@ -42,7 +42,7 @@
 % Wrap \mintinline to apply color through highlighting
 \NewDocumentCommand\MintInline{O{} m v} {
   \highLight[bg]{%
-    \mintinline[breaklines,breakanywhere,#1]{#2}{#3}%
+    \mintinline[breakanywheresymbolpre=,breaklines,breakanywhere,#1]{#2}{#3}%
   }%
 }
 \makeatother
