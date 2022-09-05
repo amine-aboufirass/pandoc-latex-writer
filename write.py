@@ -1,6 +1,7 @@
 import panflute as pf
 import os
 from pathlib import Path
+import numpy as np
 
 def action(elem, doc):
     if isinstance(elem, pf.elements.BulletList):
@@ -34,11 +35,37 @@ def action(elem, doc):
         return pf.Plain(pf.Str(text))
 
     elif isinstance(elem, pf.Code):
+        latex_escape_characters = "\\${}_&%#~^"
+        inline_text = list(elem.text)
+        
+        for char in latex_escape_characters:
+            if char == "\\":
+                replace_char = "\\textbackslash \\-"
+            elif char == "~":
+                replace_char = "\\textasciitilde \\-"
+            elif char == "^":
+                replace_char = "\\textasciicircum \\-"
+            else:
+                replace_char = None
+
+            index_occurences = np.where(
+                np.array(inline_text)==char
+            )[0].tolist()
+
+            for i in index_occurences:
+                if not replace_char:
+                    inline_text[i] =  "\\" + inline_text[i]
+                else:
+                    inline_text[i] = replace_char
+
+        inline_text = "\\-".join(inline_text)
+
         # inline code
-        text = f"\\mintinline{{text}}{{{pf.stringify(elem)}}}"
+        text = f"\\texthl{{\\texttt{{{inline_text}}}}}"
         return pf.Str(text)
     
     elif isinstance(elem, pf.CodeBlock):
+    
         language = elem.classes[0]
         caption = elem.attributes["caption"]
         label = "test"
