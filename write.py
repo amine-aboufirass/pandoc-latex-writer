@@ -52,7 +52,6 @@ def action(elem, doc):
             filename = elem.attributes['filename']
             firstline = elem.attributes['firstline']
             lastline = elem.attributes['lastline']
-            gobble = elem.attributes['gobble']
 
             text = (f"\\begin{{listing}}[H]\n"
             f"    \\inputminted\n"
@@ -62,7 +61,7 @@ def action(elem, doc):
             f"            firstline={{{firstline}}},\n" 
             f"            lastline={{{lastline}}},\n" 
             f"            linenos={{{linenos}}},\n"
-            f"            gobble={gobble},\n"
+            f"            autogobble,\n"
             f"            bgcolor=bg,\n"
             f"        ]\n"
             f"        {{{language}}}\n"
@@ -73,7 +72,6 @@ def action(elem, doc):
         
 
         else:
-            gobble = elem.attributes["gobble"]
             code = pf.stringify(elem).split('\n')
             code = [code[0]] + [" " * 8 + f"{line}" for line in code[1:]]
             code = "\n".join(code)
@@ -82,7 +80,7 @@ def action(elem, doc):
             f"        [\n"
             f"            breaklines,\n"
             f"            mathescape,\n"
-            f"            gobble={gobble},\n"
+            f"            autogobble,\n"
             f"            linenos={{{linenos}}},\n"
             f"            bgcolor=bg\n"
             f"        ]{{{language}}}\n"
