@@ -40,6 +40,9 @@ This is some text with *light emphasis*. This is some text with **strong emphasi
 
 This is some code `x = 3`.
 
+This is some inline code which forces a new line 
+`an/extremely/long/path/that/forces/a/line/break`
+
 A block of python code, referenced by Listing [lst:python-code-example]{ .listing }
 
 ``` { #lst:python-code-example .python caption="An example of python code" gobble=12}

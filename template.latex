@@ -15,15 +15,38 @@
 \usepackage{minted}
 \usepackage{caption}
 \usepackage{enumitem}
+\usepackage{luacolor}
+\usepackage{lua-ul}
+\usepackage{etoolbox}
 
 \let\mathdollar\relax
 
 \graphicspath{{./images/}}
 
 \setmonofont{Courier New}
+
 \definecolor{bg}{rgb}{0.85, 0.85, 0.85}
-\setmintedinline{bgcolor=bg}
-\setminted{bgcolor=bg, linenos}
+
+\makeatletter
+% Patch minted to allow breakanywhere for mininline
+\patchcmd \minted@inputpyg {%
+  \FancyVerbFormatLine
+}{%
+  \FancyVerbFormatLine{%
+    % \FV@BreakByTokenAnywhereHook
+    \strut\FancyVerbFormatText{\FancyVerbBreakStart##1\FancyVerbBreakStop}\strut%
+  }%
+  \@gobble
+}{}{\failure}%
+
+% Wrap \mintinline to apply color through highlighting
+\NewDocumentCommand\MintInline{O{} m v} {
+  \highLight[bg]{%
+    \mintinline[breaklines,breakanywhere,#1]{#2}{#3}%
+  }%
+}
+\makeatother
+
 \renewcommand{\theFancyVerbLine}{\small\arabic{FancyVerbLine}}
 \captionsetup[table]{skip=10pt}
 \captionsetup[figure]{skip=10pt}

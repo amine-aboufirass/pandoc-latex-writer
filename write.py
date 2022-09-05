@@ -35,7 +35,7 @@ def action(elem, doc):
 
     elif isinstance(elem, pf.Code):
         # inline code
-        text = f"\\mintinline{{text}}{{{pf.stringify(elem)}}}"
+        text = f"\\MintInline{{text}}{{{pf.stringify(elem)}}}"
         return pf.Str(text)
     
     elif isinstance(elem, pf.CodeBlock):
@@ -63,6 +63,7 @@ def action(elem, doc):
             f"            lastline={{{lastline}}},\n" 
             f"            linenos={{{linenos}}},\n"
             f"            gobble={gobble},\n"
+            f"            bgcolor=bg,\n"
             f"        ]\n"
             f"        {{{language}}}\n"
             f"        {{{filename}}}\n"
@@ -77,7 +78,14 @@ def action(elem, doc):
             code = [code[0]] + [" " * 8 + f"{line}" for line in code[1:]]
             code = "\n".join(code)
             text = (f"\\begin{{listing}}[H]\n"
-            f"    \\begin{{minted}}[breaklines, mathescape, gobble={gobble}, linenos={{{linenos}}}]{{{language}}}\n"
+            f"    \\begin{{minted}}\n"
+            f"        [\n"
+            f"            breaklines,\n"
+            f"            mathescape,\n"
+            f"            gobble={gobble},\n"
+            f"            linenos={{{linenos}}},\n"
+            f"            bgcolor=bg\n"
+            f"        ]{{{language}}}\n"
             f"        {code}\n"
             f"    \\end{{minted}}\n"
             f"    \\caption{{{caption}}}\n"
