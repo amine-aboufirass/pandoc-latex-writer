@@ -1,6 +1,7 @@
 import panflute as pf
 import os
 from pathlib import Path
+import argparse 
 
 def action(elem, doc):
     if isinstance(elem, pf.elements.BulletList):
@@ -41,6 +42,12 @@ def action(elem, doc):
     elif isinstance(elem, pf.CodeBlock):
         language = elem.classes[0]
         caption = elem.attributes["caption"]
+
+        if "gobble" in elem.attributes.keys():
+            gobble=f"gobble={elem.attributes['gobble']}"
+        else:
+            gobble="autogobble"
+
         label = "test"
         
         if "linenos" in elem.attributes.keys():
@@ -62,7 +69,7 @@ def action(elem, doc):
             f"            firstline={{{firstline}}},\n" 
             f"            lastline={{{lastline}}},\n" 
             f"            linenos={{{linenos}}},\n"
-            f"            autogobble,\n"
+            f"            {gobble},\n"
             f"            bgcolor=bg,\n"
             f"        ]\n"
             f"        {{{language}}}\n"
@@ -82,7 +89,7 @@ def action(elem, doc):
             f"            breaklines,\n"
             f"            breakanywhere,\n"
             f"            mathescape,\n"
-            f"            autogobble,\n"
+            f"            {gobble},\n"
             f"            linenos={{{linenos}}},\n"
             f"            bgcolor=bg\n"
             f"        ]{{{language}}}\n"
@@ -218,7 +225,7 @@ def debug():
     doc = pf.convert_text(markdown, standalone=True, extra_args=['--columns', '72'])
     doc.walk(action)
 
-if __name__ == "__main__":
-    main()
-    #debug()
 
+if __name__ == "__main__":
+    #debug()
+    main()
