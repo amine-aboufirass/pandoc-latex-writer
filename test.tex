@@ -1,5 +1,6 @@
 \documentclass[a4paper, ]{article}
 
+\usepackage{fdsymbol}
 \usepackage{parskip}
 \usepackage{fontspec}
 \usepackage{cite}
@@ -13,18 +14,58 @@
 \usepackage[official]{eurosym}
 \usepackage{minted}
 \usepackage{caption}
+\usepackage{enumitem}
+\usepackage{luacolor}
+\usepackage{lua-ul}
+\usepackage{etoolbox}
+
+\let\mathdollar\relax
 
 \graphicspath{{./images/}}
 
 \setmonofont{Courier New}
+
 \definecolor{bg}{rgb}{0.85, 0.85, 0.85}
-\setmintedinline{bgcolor=bg}
-\setminted{bgcolor=bg, linenos}
+
+\makeatletter
+% Patch minted to allow breakanywhere for mininline
+\patchcmd \minted@inputpyg {%
+  \FancyVerbFormatLine
+}{%
+  \FancyVerbFormatLine{%
+    % \FV@BreakByTokenAnywhereHook
+    \strut\FancyVerbFormatText{\FancyVerbBreakStart##1\FancyVerbBreakStop}\strut%
+  }%
+  \@gobble
+}{}{\failure}%
+
+% Wrap \mintinline to apply color through highlighting
+\NewDocumentCommand\MintInline{O{} m v} {
+  \highLight[bg]{%
+    \mintinline[breakanywheresymbolpre=,breaklines,breakanywhere,#1]{#2}{#3}%
+  }%
+}
+\makeatother
+
 \renewcommand{\theFancyVerbLine}{\small\arabic{FancyVerbLine}}
 \captionsetup[table]{skip=10pt}
 \captionsetup[figure]{skip=10pt}
 \captionsetup[listing]{skip=10pt}
 \setacronymstyle{long-short}
+
+\newlist{deepitemize}{itemize}{9}
+
+\setlist[deepitemize, 1]{label=\labelitemi, itemindent=0.25em}
+\setlist[deepitemize, 2]{label=\labelitemii, itemindent=0.25em}
+\setlist[deepitemize, 3]{label=\labelitemiii, itemindent=0.25em}
+\setlist[deepitemize, 4]{label=\diamond, itemindent=0.25em}
+\setlist[deepitemize, 5]{label=\smallblacksquare, itemindent=0.75em}
+\setlist[deepitemize, 6]{label=\smalltriangleup, itemindent=1.25em}
+\setlist[deepitemize, 7]{label=\smallcircle, itemindent=1.75em}
+\setlist[deepitemize, 8]{label=\smallsquare, itemindent=2.25em}
+\setlist[deepitemize, 9]{label=\labelitemiv, itemindent=3em}
+
+\setlistdepth{9}
 
 \makeglossaries
 
@@ -85,13 +126,24 @@
     This is some text with \textit{light emphasis}. This is some text
     with \textbf{strong emphasis}.
 
-    This is some code \mintinline{text}{x = 3}.
+    This is some code \MintInline{text}{x = 3}.
+
+    This is some inline code which forces a new line
+    \MintInline{text}{an/extremely/long/path/that/forces/a/line/break}
 
     A block of python code, referenced by Listing
     \ref{lst:python-code-example}
 
     \begin{listing}[H]
-        \begin{minted}[mathescape, gobble=12, linenos={true}]{python}
+        \begin{minted}
+            [
+                breaklines,
+                breakanywhere,
+                mathescape,
+                gobble=12,
+                linenos={true},
+                bgcolor=bg
+            ]{python}
             def f(x):
                 return x**2
             
@@ -108,7 +160,15 @@
     \ref{lst:dotnet-code-example}
 
     \begin{listing}[H]
-        \begin{minted}[mathescape, gobble=12, linenos={true}]{cs}
+        \begin{minted}
+            [
+                breaklines,
+                breakanywhere,
+                mathescape,
+                gobble=12,
+                linenos={true},
+                bgcolor=bg
+            ]{cs}
             using System;
             
             class Program
@@ -124,16 +184,20 @@
     \end{listing}
 
     An example of a listing imported from an external file. Line
-    \ref{ln:print-statement} contains a \mintinline{text}{print}
+    \ref{ln:print-statement} contains a \MintInline{text}{print}
     statement:
 
     \begin{listing}[H]
         \inputminted
             [
+                breaklines,
+                breakanywhere,
                 mathescape,
                 firstline={4},
                 lastline={8},
-                linenos={true}
+                linenos={true},
+                gobble=0,
+                bgcolor=bg,
             ]
             {python}
             {imported-code-block.py}
@@ -144,7 +208,15 @@
     A command line block, without line numbers or highlighting,
 
     \begin{listing}[H]
-        \begin{minted}[mathescape, gobble=12, linenos={False}]{text}
+        \begin{minted}
+            [
+                breaklines,
+                breakanywhere,
+                mathescape,
+                gobble=12,
+                linenos={False},
+                bgcolor=bg
+            ]{text}
             PS> get-childitem -recurse .
         \end{minted}
         \caption{A command line block}
@@ -153,15 +225,15 @@
 
     A bulleted list:
 
-    \begin{itemize}
+    \begin{deepitemize}
         \item item
-        \begin{itemize}
+        \begin{deepitemize}
             \item subitem
             \item subitem
             \item subitem
-        \end{itemize}
+        \end{deepitemize}
         \item item
-    \end{itemize}
+    \end{deepitemize}
 
     An ordered list:
 
@@ -230,18 +302,18 @@
             Bananas &
             1.34 &
             
-    \begin{itemize}
+    \begin{deepitemize}
         \item built-in wrapper
         \item bright color
-    \end{itemize} \\
+    \end{deepitemize} \\
             \hline
             Oranges &
             2.10 &
             
-    \begin{itemize}
+    \begin{deepitemize}
         \item cures scurvy
         \item tasty
-    \end{itemize} \\
+    \end{deepitemize} \\
             \hline
         \end{tabular}
     \end{table}
@@ -275,7 +347,7 @@
         \end{tabular}
     \end{table}
 
-    A \mintinline{text}{plantuml} class diagram, referenced by Figure
+    A \MintInline{text}{plantuml} class diagram, referenced by Figure
     \ref{fig:plantuml-diagram}:
 
     \begin{figure}[H]
@@ -285,7 +357,7 @@
         \label{fig:plantuml-diagram}
     \end{figure}
 
-    A \mintinline{text}{graphviz} graph, referenced by Figure
+    A \MintInline{text}{graphviz} graph, referenced by Figure
     \ref{fig:graphviz-diagram}.
 
     \begin{figure}[H]
@@ -297,7 +369,7 @@
 
 
     \clearpage
-    \bibliography{bibliography-test}
+    \bibliography{bibliography}
     \bibliographystyle{abbrv}
     
     \clearpage

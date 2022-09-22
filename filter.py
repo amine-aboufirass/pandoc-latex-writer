@@ -1,10 +1,24 @@
 import panflute as pf
 import os
 from pathlib import Path
+import bib_conversions as bc
 
 def action(elem, doc):
-   
-    if isinstance(elem, pf.CodeBlock):
+    
+    if isinstance(elem, pf.Doc):
+        meta = elem.get_metadata()
+        references = meta['references']
+        generate_bib = meta['bibliography']
+        if generate_bib:
+            pf.debug("generating bibliography from scratch")
+            with open("bibliography.bib", "w", encoding='utf8') as bib_file:
+                for reference in references:
+                    f = getattr(bc, reference['type'].replace('-', "_"))
+                    formatted_text = f(reference)
+                    bib_file.write(formatted_text)
+
+  
+    elif isinstance(elem, pf.CodeBlock):
         language = elem.classes[0]
         caption = elem.attributes["caption"]
         label = "test"

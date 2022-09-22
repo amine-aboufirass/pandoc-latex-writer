@@ -1,6 +1,7 @@
 generate_pdf: pandoc_write latex_compile
 generate_pdf_q: pandoc_write latex_compile_q
 generate_pdf_bib: pandoc_write_bib latex_compile
+generate_pdf_bib_q: pandoc_write_bib latex_compile_q
 
 latex_compile:
 	latexmk -lualatex --shell-escape -jobname=out $(name).tex
