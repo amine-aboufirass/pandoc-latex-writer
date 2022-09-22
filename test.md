@@ -52,9 +52,12 @@ This is some text with *light emphasis*. This is some text with **strong emphasi
 
 This is some code `x = 3`.
 
+This is some inline code which forces a new line 
+`an/extremely/long/path/that/forces/a/line/break`
+
 A block of python code, referenced by Listing [lst:python-code-example]{ .listing }
 
-``` { #lst:python-code-example .python caption="An example of python code" }
+``` { #lst:python-code-example .python caption="An example of python code" gobble=12}
 def f(x):
     return x**2
 
@@ -66,7 +69,7 @@ if __name__=="__main__":
 
 A block of .NET code, referenced by Listing [lst:dotnet-code-example]{ .listing }
 
-``` { #lst:dotnet-code-example .cs caption="An example of dotnet code" }
+``` { #lst:dotnet-code-example .cs caption="An example of dotnet code" gobble=12}
 using System;
 
 class Program
@@ -88,6 +91,7 @@ contains a `print` statement:
     lastline=8 
     filename=imported-code-block.py
     caption="A block of code imported from an external file"
+    gobble=0
     }
 ```
 
@@ -98,7 +102,8 @@ A command line block, without line numbers or highlighting,
     .text
     caption="A command line block"
     linenos="False"
-}
+    gobble=12
+    }
 PS> get-childitem -recurse .
 ```
 

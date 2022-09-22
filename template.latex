@@ -1,5 +1,6 @@
 \documentclass[a4paper, $fontsize$]{article}
 
+\usepackage{fdsymbol}
 \usepackage{parskip}
 \usepackage{fontspec}
 \usepackage{cite}
@@ -13,18 +14,58 @@
 \usepackage[official]{eurosym}
 \usepackage{minted}
 \usepackage{caption}
+\usepackage{enumitem}
+\usepackage{luacolor}
+\usepackage{lua-ul}
+\usepackage{etoolbox}
+
+\let\mathdollar\relax
 
 \graphicspath{{./images/}}
 
 \setmonofont{Courier New}
+
 \definecolor{bg}{rgb}{0.85, 0.85, 0.85}
-\setmintedinline{bgcolor=bg}
-\setminted{bgcolor=bg, linenos}
+
+\makeatletter
+% Patch minted to allow breakanywhere for mininline
+\patchcmd \minted@inputpyg {%
+  \FancyVerbFormatLine
+}{%
+  \FancyVerbFormatLine{%
+    % \FV@BreakByTokenAnywhereHook
+    \strut\FancyVerbFormatText{\FancyVerbBreakStart##1\FancyVerbBreakStop}\strut%
+  }%
+  \@gobble
+}{}{\failure}%
+
+% Wrap \mintinline to apply color through highlighting
+\NewDocumentCommand\MintInline{O{} m v} {
+  \highLight[bg]{%
+    \mintinline[breakanywheresymbolpre=,breaklines,breakanywhere,#1]{#2}{#3}%
+  }%
+}
+\makeatother
+
 \renewcommand{\theFancyVerbLine}{\small\arabic{FancyVerbLine}}
 \captionsetup[table]{skip=10pt}
 \captionsetup[figure]{skip=10pt}
 \captionsetup[listing]{skip=10pt}
 \setacronymstyle{long-short}
+
+\newlist{deepitemize}{itemize}{9}
+
+\setlist[deepitemize, 1]{label=\labelitemi, itemindent=0.25em}
+\setlist[deepitemize, 2]{label=\labelitemii, itemindent=0.25em}
+\setlist[deepitemize, 3]{label=\labelitemiii, itemindent=0.25em}
+\setlist[deepitemize, 4]{label=\diamond, itemindent=0.25em}
+\setlist[deepitemize, 5]{label=\smallblacksquare, itemindent=0.75em}
+\setlist[deepitemize, 6]{label=\smalltriangleup, itemindent=1.25em}
+\setlist[deepitemize, 7]{label=\smallcircle, itemindent=1.75em}
+\setlist[deepitemize, 8]{label=\smallsquare, itemindent=2.25em}
+\setlist[deepitemize, 9]{label=\labelitemiv, itemindent=3em}
+
+\setlistdepth{9}
 
 \makeglossaries
 
@@ -44,7 +85,7 @@
     $body$
 
     \clearpage
-    \bibliography{bibliography-test}
+    \bibliography{bibliography}
     \bibliographystyle{abbrv}
     
     \clearpage

@@ -19,7 +19,7 @@ def action(elem, doc):
         text = '\n'.join(pf.stringify(item) for item in elem.content)
         text = text.split('\n')
         text = ''.join('\n    ' + row for row in text)
-        text = '\n\\begin{itemize}' + text + '\n\\end{itemize}'
+        text = '\n\\begin{deepitemize}' + text + '\n\\end{deepitemize}'
 
         return pf.Plain(pf.Str(text))
 
@@ -53,12 +53,18 @@ def action(elem, doc):
 
     elif isinstance(elem, pf.Code):
         # inline code
-        text = f"\\mintinline{{text}}{{{pf.stringify(elem)}}}"
+        text = f"\\MintInline{{text}}{{{pf.stringify(elem)}}}"
         return pf.Str(text)
     
     elif isinstance(elem, pf.CodeBlock):
         language = elem.classes[0]
         caption = elem.attributes["caption"]
+
+        if "gobble" in elem.attributes.keys():
+            gobble=f"gobble={elem.attributes['gobble']}"
+        else:
+            gobble="autogobble"
+
         label = "test"
         
         if "linenos" in elem.attributes.keys():
@@ -70,14 +76,18 @@ def action(elem, doc):
             filename = elem.attributes['filename']
             firstline = elem.attributes['firstline']
             lastline = elem.attributes['lastline']
-            
+
             text = (f"\\begin{{listing}}[H]\n"
             f"    \\inputminted\n"
             f"        [\n"
+            f"            breaklines,\n"
+            f"            breakanywhere,\n"
             f"            mathescape,\n"
             f"            firstline={{{firstline}}},\n" 
             f"            lastline={{{lastline}}},\n" 
-            f"            linenos={{{linenos}}}\n"
+            f"            linenos={{{linenos}}},\n"
+            f"            {gobble},\n"
+            f"            bgcolor=bg,\n"
             f"        ]\n"
             f"        {{{language}}}\n"
             f"        {{{filename}}}\n"
@@ -85,38 +95,21 @@ def action(elem, doc):
             f"    \\label{{{elem.identifier}}}\n"
             f"\\end{{listing}}\n")
         
-        elif language in ["plantuml", "graphviz"]:
-            code = pf.stringify(elem).split('\n')
-            code = "\n".join(code)
-            filename = elem.identifier.split(":")[-1]
-            caption = elem.attributes["caption"]
-            
-            with open(f"{language}-diagrams/{filename}.txt", 'w') as fs:
-                    fs.write(code)
-
-            if language == 'plantuml':
-                command = f"plantuml -o ../images {language}-diagrams/{filename}.txt"
-            else:
-                command = f"dot -Tpng -o images/{filename}.png " + \
-                    f"{language}-diagrams/{filename}.txt" 
-
-            os.system(command)
-            
-            return pf.Plain(pf.Image(
-                pf.Str(caption),
-                identifier = elem.identifier,
-                url = f"images/{filename}.png",
-                attributes = {
-                    "scale": elem.attributes["scale"]   
-                    }
-                ))
 
         else:
             code = pf.stringify(elem).split('\n')
             code = [code[0]] + [" " * 8 + f"{line}" for line in code[1:]]
             code = "\n".join(code)
             text = (f"\\begin{{listing}}[H]\n"
-            f"    \\begin{{minted}}[mathescape, gobble=12, linenos={{{linenos}}}]{{{language}}}\n"
+            f"    \\begin{{minted}}\n"
+            f"        [\n"
+            f"            breaklines,\n"
+            f"            breakanywhere,\n"
+            f"            mathescape,\n"
+            f"            {gobble},\n"
+            f"            linenos={{{linenos}}},\n"
+            f"            bgcolor=bg\n"
+            f"        ]{{{language}}}\n"
             f"        {code}\n"
             f"    \\end{{minted}}\n"
             f"    \\caption{{{caption}}}\n"
@@ -259,7 +252,7 @@ def debug():
         )
     doc.walk(action)
 
-if __name__ == "__main__":
-    main()
-    #debug()
 
+if __name__ == "__main__":
+    #debug()
+    main()
