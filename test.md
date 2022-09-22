@@ -2,7 +2,17 @@
 title: A title
 author: Amine Aboufirass
 abstract: some abstract
-fontsize: 11pt
+references:
+- author: ENTER B.V.
+  id: an-online-resource
+  year: 2022
+  url: https://www.enter-group.nl/competenties/chemical
+  type: online-resource
+- author: Pandoc 
+  id: another-online-resource
+  year: 2022
+  url: https://pandoc.org/MANUAL.html#synopsis
+  type: online-resource
 ---
 
 ::::{ .acronyms }
@@ -23,6 +33,8 @@ variable
 ::::
 
 # A header { #sec:my-header }
+
+Referencing @an-online-resource and @another-online-resource.
 
 # Another header
 

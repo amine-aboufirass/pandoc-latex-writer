@@ -44,7 +44,7 @@
     $body$
 
     \clearpage
-    \bibliography{bibliography}
+    \bibliography{bibliography-test}
     \bibliographystyle{abbrv}
     
     \clearpage

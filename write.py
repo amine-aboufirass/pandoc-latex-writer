@@ -1,15 +1,33 @@
 import panflute as pf
 import os
 from pathlib import Path
+import bib_conversions as bc
 
 def action(elem, doc):
-    if isinstance(elem, pf.elements.BulletList):
+    if isinstance(elem, pf.Doc):
+        meta = elem.get_metadata()
+        references = meta['references']
+        generate_bib = meta['bibliography']
+        if generate_bib:
+            with open("bibliography-test.bib", "w", encoding='utf8') as bib_file:
+                for reference in references:
+                    f = getattr(bc, reference['type'].replace('-', "_"))
+                    formatted_text = f(reference)
+                    bib_file.write(formatted_text)
+
+    elif isinstance(elem, pf.elements.BulletList):
         text = '\n'.join(pf.stringify(item) for item in elem.content)
         text = text.split('\n')
         text = ''.join('\n    ' + row for row in text)
         text = '\n\\begin{itemize}' + text + '\n\\end{itemize}'
 
         return pf.Plain(pf.Str(text))
+
+    elif isinstance(elem, pf.elements.Cite):
+        assert len(elem.citations.list) == 1
+        citation_id = elem.citations.list[0].id
+        text = f"\\cite{{{citation_id}}}"
+        return pf.Str(text)
 
     elif isinstance(elem, pf.elements.OrderedList):
         text = '\n'.join(pf.stringify(item) for item in elem.content)
@@ -222,13 +240,23 @@ def action(elem, doc):
         return pf.Str(text)
 
 def main(doc=None):
+
     return pf.run_filter(action, doc = doc)
 
 def debug():
     with open("test.md") as fs:
         markdown = fs.read()
 
-    doc = pf.convert_text(markdown, standalone=True, extra_args=['--columns', '72'])
+    doc = pf.convert_text(
+        markdown, 
+        standalone=True, 
+        extra_args=[
+            '--columns', 
+            '72',
+            '--metadata',
+            'bibliography=true'
+            ]
+        )
     doc.walk(action)
 
 if __name__ == "__main__":
