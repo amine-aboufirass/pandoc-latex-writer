@@ -7,9 +7,10 @@ def action(elem, doc):
     
     if isinstance(elem, pf.Doc):
         meta = elem.get_metadata()
-        references = meta['references']
         generate_bib = meta['bibliography']
+
         if generate_bib:
+            references = meta['references']
             pf.debug("generating bibliography from scratch")
             with open("bibliography.bib", "w", encoding='utf8') as bib_file:
                 for reference in references:
