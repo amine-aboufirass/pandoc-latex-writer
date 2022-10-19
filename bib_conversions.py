@@ -30,4 +30,20 @@ def online_resource(reference):
     result += f'    howpublished = {{\\href{{{url}}}{{link}}}},\n'
     
     result += '}\n\n'
+    
+    return result
+
+def book(reference):
+    result = "@book{\n"
+    result += f'{reference["id"]},\n'
+    result += f'    author = {{{{{reference["author"]}}}}},\n'
+    result += f'    title = {{{{{reference["title"]}}}}},\n'
+    result += f'    publisher = {{{{{reference["publisher"]}}}}},\n'
+    result += f'    year = {reference["year"]},\n'
+
+    if "edition" in reference.keys():
+        result += f'    edition = {{{{{reference["edition"]}}}}},\n'
+
+    result += '}\n\n'
+
     return result

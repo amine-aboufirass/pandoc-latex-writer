@@ -9,7 +9,7 @@ def action(elem, doc):
         references = meta['references']
         generate_bib = meta['bibliography']
         if generate_bib:
-            with open("bibliography-test.bib", "w", encoding='utf8') as bib_file:
+            with open("bibliography.bib", "w", encoding='utf8') as bib_file:
                 for reference in references:
                     f = getattr(bc, reference['type'].replace('-', "_"))
                     formatted_text = f(reference)

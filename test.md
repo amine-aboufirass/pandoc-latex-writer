@@ -11,8 +11,15 @@ references:
 - author: Pandoc 
   id: another-online-resource
   year: 2022
-  url: https://pandoc.org/MANUAL.html#synopsis
+  url: https://pandoc.org/MANUAL.html
   type: online-resource
+- id: a-book
+  author: Freeman, E. and Robson, E.
+  year: 2020
+  publisher: O'Reilly Media, Incorporated
+  title: Head First Design Patterns
+  edition: 2
+  type: book
 ---
 
 ::::{ .acronyms }
@@ -34,7 +41,9 @@ variable
 
 # A header { #sec:my-header }
 
-Referencing @an-online-resource and @another-online-resource.
+Citing @an-online-resource and @another-online-resource.
+
+Citing @a-book
 
 # Another header
 
