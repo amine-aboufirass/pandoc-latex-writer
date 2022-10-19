@@ -3,7 +3,18 @@ import os
 from pathlib import Path
 
 def action(elem, doc):
-    if isinstance(elem, pf.elements.BulletList):
+    if isinstance(elem, pf.Doc):
+        meta = elem.get_metadata()
+        references = meta['references']
+        generate_bib = meta['bibliography']
+        if generate_bib:
+            with open("bibliography.bib", "w", encoding='utf8') as bib_file:
+                for reference in references:
+                    f = getattr(bc, reference['type'].replace('-', "_"))
+                    formatted_text = f(reference)
+                    bib_file.write(formatted_text)
+
+    elif isinstance(elem, pf.elements.BulletList):
         text = '\n'.join(pf.stringify(item) for item in elem.content)
         text = text.split('\n')
         text = ''.join('\n    ' + row for row in text)
