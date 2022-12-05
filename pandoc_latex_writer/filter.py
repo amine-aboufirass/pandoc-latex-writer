@@ -30,11 +30,12 @@ def action(elem, doc):
             filename = elem.identifier.split(":")[-1]
             caption = elem.attributes["caption"]
 
-            dir_path = Path(f"{language}-diagrams/{filename}.txt")
+            dir_path = Path(f"{language}-diagrams")
+
             if not dir_path.exists():
                 os.mkdir(dir_path)
 
-            with open(dir_path, 'w') as fs:
+            with open(dir_path / (filename + ".txt"), 'w') as fs:
                     fs.write(code)
 
             if language == 'plantuml':
