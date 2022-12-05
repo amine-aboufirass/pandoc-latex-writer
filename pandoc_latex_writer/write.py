@@ -212,6 +212,10 @@ def action(elem, doc):
             return pf.Str(f"\\ref{{{pf.stringify(elem)}}})")
 
     elif isinstance(elem, pf.Image):
+
+        if not Path("images").exists():
+            os.path.mkdir("images")
+
         caption = pf.stringify(elem)
         scale = float(elem.attributes["scale"])
         text = (

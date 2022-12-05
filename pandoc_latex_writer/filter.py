@@ -47,9 +47,9 @@ def action(elem, doc):
             
             return pf.Para(pf.Image(
                 pf.Str(caption),
-                identifier = elem.identifier,
-                url = f"images/{filename}.png",
-                attributes = {
+                identifier=elem.identifier,
+                url=f"{filename}.png",
+                attributes={
                     "scale": elem.attributes["scale"]   
                     }
                 ))
