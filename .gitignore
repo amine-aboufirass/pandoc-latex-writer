@@ -19,3 +19,7 @@ pandoc_latex_writer.egg-info/
 venv/
 test.tex
 bibliography.bib
+*.glsdefs
+*.acn
+*.acr
+*.alg
