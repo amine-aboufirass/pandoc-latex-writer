@@ -16,5 +16,6 @@ setup(
         "console_scripts": [
             "pandoc-latex-writer=pandoc_latex_writer:cli.main"
         ]
-    }
+    },
+    packages=["pandoc_latex_writer"]
 )
