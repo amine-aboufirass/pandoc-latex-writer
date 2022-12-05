@@ -13,8 +13,8 @@ def online_resource(reference):
     url = reference['url']
     url_domain = "https://"+urlparse(url).netloc
 
-    html = requests.get(url).content
-    html_domain = requests.get(url_domain).content 
+    html = requests.get(url, verify=False).content
+    html_domain = requests.get(url_domain, verify=False).content
 
     soup = BeautifulSoup(html, features="html.parser")
     soup_domain = BeautifulSoup(html_domain, features="html.parser")

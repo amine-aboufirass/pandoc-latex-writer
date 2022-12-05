@@ -15,4 +15,11 @@ out.*
 .idea/
 _minted-out/
 _minted-test/
-
+pandoc_latex_writer.egg-info/
+venv/
+test.tex
+bibliography.bib
+*.glsdefs
+*.acn
+*.acr
+*.alg
