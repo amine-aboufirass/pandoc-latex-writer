@@ -4,6 +4,7 @@ from . import filter as f
 import argparse
 from panflute import *
 import subprocess
+from importlib.resources import files
 
 def main():
     parser = argparse.ArgumentParser()
@@ -41,8 +42,10 @@ def main():
     doc = run_filters(actions, doc=doc)
 
     tex_filename = args.output_filename if args.output_filename else args.input_filename
+    latex_template_path = files('pandoc_latex_writer').joinpath('template.latex')
+
     pandoc_args = [
-        "--template=template.latex",
+        f"--template={latex_template_path}",
         f"--output={tex_filename}.tex"
     ]
 

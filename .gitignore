@@ -23,3 +23,5 @@ bibliography.bib
 *.acn
 *.acr
 *.alg
+*.bbl
+*.blg
