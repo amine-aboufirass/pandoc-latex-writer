@@ -35,6 +35,9 @@ def action(elem, doc):
             if not dir_path.exists():
                 os.mkdir(dir_path)
 
+            if not Path("images").exists():
+                os.path.mkdir("images")
+
             with open(dir_path / (filename + ".txt"), 'w') as fs:
                     fs.write(code)
 
