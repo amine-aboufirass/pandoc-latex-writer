@@ -218,10 +218,14 @@ def action(elem, doc):
 
         caption = pf.stringify(elem)
         scale = float(elem.attributes["scale"])
+
+        if os.path.splitext(elem.url)[-1] == ".svg":
+            include_text = f"    \\includesvg[scale={scale}]{{{elem.url}}}\n"
+        else:
+            include_text = f"    \\includegraphics[scale={scale}]{{{elem.url}}}\n"
         text = (
             f"\\begin{{figure}}[H]\n"
-            f"    \\centering\n"
-            f"    \\includegraphics[scale={scale}]{{{elem.url}}}\n"
+            f"    \\centering\n{include_text}"
             f"    \\caption{{{caption}}}\n"
             f"    \\label{{{elem.identifier}}}\n"
             f"\\end{{figure}}\n"

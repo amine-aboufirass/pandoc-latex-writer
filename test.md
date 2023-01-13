@@ -217,3 +217,7 @@ digraph G
     Hello->World
 }
 ```
+
+Including an SVG graphic with LaTeX formatted math:
+
+![An SVG graphic](test.svg){ #fig:svg-graphic scale=0.9 }

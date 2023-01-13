@@ -18,17 +18,20 @@
 \usepackage{luacolor}
 \usepackage{lua-ul}
 \usepackage{etoolbox}
+\usepackage{svg}
 
 \let\mathdollar\relax
 
+
 \graphicspath{{./images/}}
+\svgpath{{./images/}}
 
 \setmonofont{Courier New}
 
 \definecolor{bg}{rgb}{0.85, 0.85, 0.85}
 
 \makeatletter
-% Patch minted to allow breakanywhere for mininline
+% Patch minted to allow breakanywhere for mintinline
 \patchcmd \minted@inputpyg {%
   \FancyVerbFormatLine
 }{%
