@@ -221,3 +221,9 @@ digraph G
 Including an SVG graphic with LaTeX formatted math:
 
 ![An SVG graphic](test.svg){ #fig:svg-graphic scale=0.9 }
+
+A block quote:
+
+> To be or not to be, that is the question
+
+More text.

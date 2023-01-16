@@ -19,6 +19,7 @@
 \usepackage{lua-ul}
 \usepackage{etoolbox}
 \usepackage{svg}
+\usepackage{csquotes}
 
 \let\mathdollar\relax
 
