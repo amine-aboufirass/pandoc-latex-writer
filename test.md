@@ -20,6 +20,13 @@ references:
   title: Head First Design Patterns
   edition: 2
   type: book
+- author: Microsoft 
+  id: a-manual-online-resource
+  year: 2022 
+  url: https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-mstest
+  type: online-resource-manual
+  pagetitle: "Unit testing C\\\\# with MSTest and .NET - .NET | Microsoft Learn"
+  homepagetitle: "Microsoft Learn: Build skills that open doors in your career"
 ---
 
 ::::{ .acronyms }
@@ -41,7 +48,7 @@ variable
 
 # A header { #sec:my-header }
 
-Citing @an-online-resource and @another-online-resource.
+Citing @an-online-resource and @another-online-resource. A @a-manual-online-resource
 
 Citing @a-book
 
