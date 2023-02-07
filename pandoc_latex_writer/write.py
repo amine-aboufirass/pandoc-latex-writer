@@ -242,7 +242,8 @@ def action(elem, doc):
 
     elif isinstance(elem, pf.BlockQuote):
         text = (
-            f"\\begin{{displayquote}}\n{pf.stringify(elem)}"
+            f"\\begin{{displayquote}}\n"
+            f"{pf.stringify(elem)}"
             f"\\end{{displayquote}}\n"
         )
         return pf.Plain(pf.Str(text))

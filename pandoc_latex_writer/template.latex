@@ -23,7 +23,6 @@
 
 \let\mathdollar\relax
 
-
 \graphicspath{{./images/}}
 \svgpath{{./images/}}
 
@@ -70,6 +69,8 @@
 \setlist[deepitemize, 9]{label=\labelitemiv, itemindent=3em}
 
 \setlistdepth{9}
+
+\renewcommand{\mkbegdispquote}[2]{\itshape}
 
 \makeglossaries
 
